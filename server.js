@@ -16,8 +16,21 @@ const db = mysql.createConnection(
     // MySQL username,
     user: 'root',
     // TODO: Add MySQL password here
-    password: '',
+    password: 'Transformer$4',
     database: 'company_db'
   },
   console.log(`Connected to the company_db database.`)
 );
+
+
+
+
+
+// Default response for any other request (Not Found)
+app.use((req, res) => {
+  res.status(404).end();
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
