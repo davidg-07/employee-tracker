@@ -1,4 +1,5 @@
-const express = require('express');
+const inquirer = require('inquirer');
+require('console.table')
 // Import and require mysql2
 const mysql = require('mysql2');
 
@@ -22,15 +23,3 @@ const db = mysql.createConnection(
   console.log(`Connected to the company_db database.`)
 );
 
-
-
-
-
-// Default response for any other request (Not Found)
-app.use((req, res) => {
-  res.status(404).end();
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
