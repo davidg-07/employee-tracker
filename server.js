@@ -3,13 +3,6 @@ require('console.table')
 // Import and require mysql2
 const mysql = require('mysql2');
 
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
 // Connect to database
 const db = mysql.createConnection(
   {
@@ -23,3 +16,27 @@ const db = mysql.createConnection(
   console.log(`Connected to the company_db database.`)
 );
 
+function viewEmployees() {
+  db.promise().query('SELECT * FROM employee')
+    .then(data => {
+      console.table(data[0]);
+    })
+}
+
+function init() {
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'choice',
+      message: 'welcome to employee tracker what would you like to do?',
+      choices: [
+        {
+          name: 'view all employees',
+          value: viewEmployees()
+        }
+      ]
+    }
+  ])
+}
+
+init();
