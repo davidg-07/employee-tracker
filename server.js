@@ -20,6 +20,15 @@ function quit() {
   process.exit();
 }
 
+function viewAllDepartments() {
+  db.promise().query('SELECT * FROM department')
+    .then(data => {
+      console.log('\n')
+      console.table(data[0]);
+      init();
+    })
+}
+
 function viewEmployees() {
   db.promise().query('SELECT * FROM employee')
     .then(data => {
@@ -46,6 +55,10 @@ function init() {
       message: 'welcome to employee tracker what would you like to do?',
       choices: [
         {
+          name: 'view all department',
+          value: 'view_Department'
+        },
+        {
           name: 'view all employees',
           value: 'view_Employees'
         },
@@ -63,6 +76,9 @@ function init() {
     let data = result.choice
     console.log(data);
     switch(data) {
+      case 'view_Employees':
+        viewAllDepartments();
+        break;
       case 'view_Employees':
         viewEmployees();
         break;
