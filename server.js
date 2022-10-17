@@ -10,16 +10,31 @@ const db = mysql.createConnection(
     // MySQL username,
     user: 'root',
     // TODO: Add MySQL password here
-    password: 'Transformer$4',
+    password: 'root123!',
     database: 'company_db'
   },
   console.log(`Connected to the company_db database.`)
 );
 
+function quit() {
+  process.exit();
+}
+
 function viewEmployees() {
   db.promise().query('SELECT * FROM employee')
     .then(data => {
+      console.log('\n')
       console.table(data[0]);
+      init();
+    })
+}
+
+function viewAllRoles() {
+  db.promise().query('SELECT * FROM role')
+    .then(data => {
+      console.log('\n')
+      console.table(data[0]);
+      init();
     })
 }
 
@@ -32,11 +47,32 @@ function init() {
       choices: [
         {
           name: 'view all employees',
-          value: viewEmployees()
-        }
+          value: 'view_Employees'
+        },
+        {
+          name: 'view all roles',
+          value: 'view_AllRoles'
+        },
+        {
+          name: 'quit',
+          value: 'quit'
+        },
       ]
     }
-  ])
+  ]).then(result => {
+    let data = result.choice
+    console.log(data);
+    switch(data) {
+      case 'view_Employees':
+        viewEmployees();
+        break;
+        case 'view_AllRoles':
+        viewAllRoles();
+        break;
+        default:
+        quit();
+    }
+  })
 }
 
 init();
